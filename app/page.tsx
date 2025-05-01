@@ -2,10 +2,18 @@
 
 import { useEffect, useRef, useState } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
-import { ArrowRight, ChevronDown, Github, Linkedin, Twitter } from "lucide-react"
+import { ArrowRight, ChevronDown, Github, Linkedin, Twitter } from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { cn } from "@/lib/utils"
+
+// Define interfaces for our components
+interface Feature {
+  icon: React.ReactNode;
+  title: string;
+  description: string;
+  content: string;
+}
 
 export default function Home() {
   const ref = useRef(null)
@@ -14,9 +22,8 @@ export default function Home() {
     offset: ["start start", "end start"],
   })
 
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"])
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "200%"])
-  const [mounted, setMounted] = useState(false)
+  const [, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -81,8 +88,8 @@ export default function Home() {
         </motion.div>
       </section>
 
-  {/* Features section */}
-  <section className="py-20 bg-black">
+      {/* Features section */}
+      <section className="py-20 bg-black">
         <div className="container px-4 md:px-6">
           <div className="text-center mb-16">
             <h2 className="text-3xl md:text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-500 to-purple-500 mb-4">
@@ -279,7 +286,7 @@ function CommitmentItem({ icon, text }: { icon: string; text: string }) {
 }
 
 // Feature card component
-function FeatureCard({ feature, index }: { feature: any; index: number }) {
+function FeatureCard({ feature, index }: { feature: Feature; index: number }) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -371,7 +378,7 @@ const technologies = [
 ]
 
 // Sample features data
-const features = [
+const features: Feature[] = [
   {
     icon: (
       <motion.div
@@ -457,3 +464,4 @@ const features = [
     content: "Cada elemento está cuidadosamente diseñado para crear una experiencia visual coherente y atractiva.",
   },
 ]
+
